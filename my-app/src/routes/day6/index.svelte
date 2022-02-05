@@ -7,7 +7,7 @@ let sliderValue = 50;
 </script>
 
 <svelte:head>
-  <title>AoJS - Day5</title>
+  <title>AoJS - Day6</title>
 </svelte:head>
 <div class="wrapper">
   <div class="amount">
