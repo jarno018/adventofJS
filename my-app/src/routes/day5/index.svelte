@@ -6,6 +6,17 @@ import { onMount } from "svelte";
 
   let checkboxes = [];
 
+  const findIndex = (arr, compareValue) => {
+
+    let returnValue = undefined;
+
+    arr.forEach((element, index) => {
+      if(element === compareValue) returnValue = index;
+    });
+
+    return returnValue;
+  }
+
   onMount(() => {
 
     checkboxes = document.querySelectorAll('input[type=checkbox]');
@@ -13,11 +24,27 @@ import { onMount } from "svelte";
     checkboxes.forEach(box => {
       box.addEventListener('click', (e) => {
         if(e.target.checked) {
-          if(lastSelectedIndex !== undefined && e.shiftKey) {
 
+          let selectedIndex = findIndex(checkboxes, e.target);
+          console.log(selectedIndex + ' ' + lastSelectedIndex);
+
+          if(lastSelectedIndex !== undefined && e.shiftKey) {
+            if(selectedIndex > lastSelectedIndex) {
+              
+              for(let i = lastSelectedIndex; i <= selectedIndex; i++) {
+                console.log(checkboxes[i]);
+                checkboxes[i].checked = true;
+              }
+            }
+            else {
+              for(let i = selectedIndex; i >= lastSelectedIndex; i--) {
+                checkboxes[i].checked = true;
+              }
+            }
           }
-          lastSelectedIndex = checkboxes.findIndex(o => o === e.target);
-          console.log(lastSelectedIndex);
+
+
+          lastSelectedIndex = findIndex(checkboxes, e.target);
         }
       })
     })
